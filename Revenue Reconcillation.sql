@@ -1,10 +1,11 @@
 
 ---COD---
 
-select C2.id CustomerID,
-CAST(dbo.tobdt(ev.[When]) as DATE) Dates, 
-Amount, Memo,
-left(right(memo,9),8) ShipmentTag
+select  C2.id                               [CustomerID],
+        CAST(dbo.tobdt(ev.[When]) as DATE)  [Dates], 
+        Amount                              [Amount], 
+        Memo                                [Memo],
+        left(right(memo,9),8)               [ShipmentTag]
 
 from accounting.txn t
 join accounting.account ac on t.accountid = ac.id
@@ -93,7 +94,7 @@ and r.CompletedOn<'2022-06-15 00:00 +6:00'
 and r.BraintreePaymentId is not null
 order by 4 asc
 
-----Reconciled Deliveries - (always filter ‘Salary’ after getting the data)
+----Reconciled Deliveries - (always filter ï¿½Salaryï¿½ after getting the data)
 
 select t.eventid,badgeid,e.FullName, Amount,Cast(dbo.tobdt([When]) as datetimeoffset) Dates,   Memo,ac.AccountHead
 from accounting.txn t
