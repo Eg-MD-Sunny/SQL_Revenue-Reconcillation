@@ -1,6 +1,4 @@
-
 ---COD---
-
 select  C2.id                               [CustomerID],
         CAST(dbo.tobdt(ev.[When]) as DATE)  [Dates], 
         Amount                              [Amount], 
@@ -18,12 +16,14 @@ and ev.[When] >= '2022-06-08 00:00 +6:00'
 and ev.[When] < '2022-06-15 00:00 +6:00'
 order by 1 asc
 
+
+
 -- Portwallet Payment---
-select cast(dbo.tobdt(pw.SucceededOn) as date) SucceededOn,  
-s.orderid OrderID, 
-c.id Customerid,
--(amount) Amount,
-pw.portwalletinvoiceid PortWalletInvoiceID
+select cast(dbo.tobdt(pw.SucceededOn) as date) [SucceededOn],  
+s.orderid                                      [OrderID], 
+c.id                                           [Customerid],
+-(amount)                                      [Amount],
+pw.portwalletinvoiceid                         [PortWalletInvoiceID]
 
 FROM shipment s
 join payment.PaymentInvoiceMap pmap on pmap.InvoiceId = s.InvoiceId
@@ -34,7 +34,11 @@ and pw.SucceededOn < '2022-05-01 00:00 +6:00'
 and Amount is not null
 and SucceededOn is not null
 
-group by cast(dbo.tobdt(pw.SucceededOn) as date), c.id, s.orderid, amount ,pw.portwalletinvoiceid
+group by cast(dbo.tobdt(pw.SucceededOn) as date),
+         c.id,
+         s.orderid,
+         amount,
+         pw.portwalletinvoiceid
 
 
 --Braintree Updated
